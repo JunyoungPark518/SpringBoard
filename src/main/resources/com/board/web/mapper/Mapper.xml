@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.web.mapper.Mapper">
+   <select id="getArticleList" resultType="com.board.web.domain.Article" parameterType="hashMap">
+   SELECT * FROM Article 
+      <if test="title != null">
+      WHERE title like '%${title}%' 
+      </if>
+      <if test="content != null">
+      WHERE content like '%${content}%' 
+      </if>
+      <if test="both != null">
+      WHERE title like '%${both}%' OR content like '%${both}%' 
+      </if>
+  ORDER BY seq DESC ;
+   </select>
+   <select id="count" resultType="int" parameterType="hashMap">
+   	SELECT COUNT(*) FROM #{group}
+   	<if test="key!=null">
+   		WHERE ${key} = #{value};
+   	</if>
+   </select>
+   
+</mapper>
