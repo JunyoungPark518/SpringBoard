@@ -10,5 +10,4 @@ import com.board.web.domain.Article;
 @Repository
 public interface Mapper {
 	public List<Article> getArticleList(Map<?,?> map) throws Exception;
-	public int count(Map<?,?> map) throws Exception;
 }

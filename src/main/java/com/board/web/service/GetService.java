@@ -20,10 +20,4 @@ public class GetService {
 		IGetService service = (map) -> mapper.getArticleList(map);
 		return (List<Article>) service.execute(paramMap);
 	}
-	
-	public int count(Map<?,?> paramMap) throws Exception {
-		IGetService service = (map) -> mapper.getArticleList(map);
-		return (Integer) service.execute(paramMap);
-	}
-
 }

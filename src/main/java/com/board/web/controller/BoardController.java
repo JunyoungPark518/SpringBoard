@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +19,14 @@ import com.board.web.service.GetService;
 public class BoardController {
 	@Autowired GetService getService;
 	
-	@RequestMapping(value = "/board/pagination", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody Map<?, ?> board(@RequestBody Map<String, String> paramMap) throws Exception {
+	@RequestMapping(value = "/board/pagination/{pageNo}", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody Map<?, ?> board(@PathVariable String pageNo, @RequestBody Map<String, String> paramMap) throws Exception {
+		System.out.println("board Entered");
 		Map<String, Object> map = new HashMap<>();
 		map.put("group", "Article");
 		int pageNumber = Integer.parseInt(paramMap.get("pageNo"));
-		int pagesPerOneBlock = 5, rowsPerOnePage = 5, theNumberOfRows = getService.count(map),
+		int theNumberOfRows = getService.getArticleList(map).size();
+		int pagesPerOneBlock = 5, rowsPerOnePage = 5, 
 				theNumberOfPages = (theNumberOfRows % rowsPerOnePage == 0) ? theNumberOfRows / rowsPerOnePage
 						: theNumberOfRows / rowsPerOnePage + 1,
 				startPage = pageNumber - ((pageNumber - 1) % pagesPerOneBlock),
@@ -31,16 +34,19 @@ public class BoardController {
 						: theNumberOfPages,
 				startRow = (pageNumber - 1) * rowsPerOnePage + 1, endRow = pageNumber * rowsPerOnePage,
 				prevBlock = startPage - pagesPerOneBlock, nextBlock = startPage + pagesPerOneBlock;
-		List<Article> list = getService.getArticleList(map);
-		map.put("list", list);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		System.out.println("startRow:   " + startRow);
+		System.out.println("endRow:   " + endRow);
+		List<Article> list = getService.getArticleList(map);
+		map.put("list", list);
 		map.put("theNumberOfRows", theNumberOfRows);
 		map.put("nextBlock", nextBlock);
 		map.put("prevBlock", prevBlock);
 		map.put("startPage", startPage);
 		map.put("endPage", endPage);
 		map.put("pageNumber", pageNumber);
+		map.put("theNumberOfPages", theNumberOfPages);
 		map.put("result", "SUCCESS");
 		return map;
 	}
