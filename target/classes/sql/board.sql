@@ -36,8 +36,8 @@ ADD CONSTRAINT FK_User FOREIGN KEY (id)
 REFERENCE BoardUser(id);
 
 
-
-
+SELECT * FROM BoardUser;
+DELETE FROM BoardUser WHERE id = 'test';
 
 -- INSERT 
 INSERT INTO BoardUser(id, pass, phone, gender, age) VALUES ('admin', '1234', '010-2206-8900', 'M', '28');

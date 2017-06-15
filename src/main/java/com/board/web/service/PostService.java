@@ -11,13 +11,13 @@ import com.board.web.mapper.Mapper;
 public class PostService {
 	@Autowired
 	Mapper mapper;
-	public Object register(Map<?,?> paramMap) throws Exception {
-		IGetService service = (map) -> mapper.getArticleList(map);
-		return service.execute(paramMap);
+	public int register(Map<?,?> paramMap) throws Exception {
+		IGetService service = (map) -> mapper.register(map);
+		return (int) service.execute(paramMap);
 	}
 	
-	public Object write(Map<?,?> paramMap) throws Exception {
-		IGetService service = (map) -> mapper.getUser(map);
-		return service.execute(paramMap);
+	public int write(Map<?,?> paramMap) throws Exception {
+		IGetService service = (map) -> mapper.write(map);
+		return (int) service.execute(paramMap);
 	}
 }

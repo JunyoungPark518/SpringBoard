@@ -3,5 +3,5 @@ package com.board.web.service;
 @org.springframework.stereotype.Service
 @FunctionalInterface
 public interface IPostService {
-	public Object execute(java.util.Map<?,?> map) throws Exception;
+	public int execute(java.util.Map<?,?> map) throws Exception;
 }

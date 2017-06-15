@@ -28,7 +28,7 @@ public class PermissionController {
 		map.put("id", paramMap.get("userId"));
 		for (BoardUser boardUser : getService.getAllUser(map)) {
 			if(boardUser.getId().equals(map.get("id"))){
-				user = getService.getUser(map);
+				user = getService.getUser(map).get(0);
 				break;
 			}
 		}
@@ -41,17 +41,18 @@ public class PermissionController {
 	
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody Map<?, ?> register(@RequestBody Map<String, String> paramMap) throws Exception {
-		System.out.println("register Entered");
+		System.out.println("회원가입 Entered");
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", paramMap.get("userId"));
 		map.put("pass", paramMap.get("pass"));
 		map.put("phone", paramMap.get("pass"));
 		map.put("gender", "M");
 		map.put("age", paramMap.get("age"));
-		if(postService.register(map).equals("1")){
-			map.clear();
+		if(postService.register(map)==1){
+			System.out.println("회원가입성공");
 			map.put("success", "1");
 		} else {
+			System.out.println("회원가입실패");
 			map.clear();
 		}
 		return map;

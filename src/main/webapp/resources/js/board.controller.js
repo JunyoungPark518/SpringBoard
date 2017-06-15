@@ -78,6 +78,7 @@ jyp.controller = (function() {
     };
 
     var index = function(){
+	$('#wrapper').html(indexView());
 	$('#board').on('click',function(){
 	    boardMain(1);
 	});
@@ -93,11 +94,17 @@ jyp.controller = (function() {
 		      dataType : 'json',
 		      contentType : 'application/json',
 		      success : function(data){
+			  console.log(data.success);
+			  console.log(data.user);
 			  if(data.success==1){
 			      alert('로그인 성공!!');
-			      jyp.cookie.setCookie("login","Y");
+			      /*jyp.cookie.setCookie("login","Y");
 			      jyp.cookie.setCookie("id",data.user.id);
+			      console.log(jyp.cookie.getCookie("login"));
+			      console.log(jyp.cookie.getCookie("id"));*/
 			      boardMain(1);
+			  } else {
+			      alert('로그인 실패');
 			  }
 		      },
 		      error : function(x,s,m){
@@ -121,9 +128,12 @@ jyp.controller = (function() {
 		    dataType : 'json',
 		    contentType : 'application/json',
 		    success : function(data){
+			console.log(data.success);
 			if(data.success==1){
 			    alert('회원가입 성공!!');
 			    index();
+			} else {
+			    alert('회원가입 실패');
 			}
 		    },
 		    error : function(x,s,m){

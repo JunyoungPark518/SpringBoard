@@ -39,8 +39,6 @@ public class BoardController {
 				prevBlock = startPage - pagesPerOneBlock, nextBlock = startPage + pagesPerOneBlock;
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		System.out.println("startRow:   " + startRow);
-		System.out.println("endRow:   " + endRow);
 		List<Article> list = getService.getArticleList(map);
 		map.put("list", list);
 		map.put("theNumberOfRows", theNumberOfRows);
@@ -62,12 +60,12 @@ public class BoardController {
 		map.put("title", paramMap.get("title"));
 		map.put("content", paramMap.get("content"));
 		map.put("regdate", Util.nowDate());
-		if(postService.register(map).equals("1")){
+		/*if(postService.register(map).get(0)==1){
 			map.clear();
 			map.put("success", "success");
 		} else {
 			map.clear();
-		}
+		}*/
 		return map;
 	}
 	

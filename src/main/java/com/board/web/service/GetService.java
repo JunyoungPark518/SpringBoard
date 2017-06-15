@@ -22,9 +22,9 @@ public class GetService {
 		return (List<Article>) service.execute(paramMap);
 	}
 	
-	public BoardUser getUser(Map<?,?> paramMap) throws Exception {
+	public List<BoardUser> getUser(Map<?,?> paramMap) throws Exception {
 		IGetService service = (map) -> mapper.getUser(map);
-		return (BoardUser) service.execute(paramMap);
+		return (List<BoardUser>) service.execute(paramMap);
 	}
 	
 	public List<BoardUser> getAllUser(Map<?,?> paramMap) throws Exception {
