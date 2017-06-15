@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.board.web.domain.Article;
 import com.board.web.service.GetService;
+import com.board.web.service.PostService;
+import com.board.web.util.Util;
 
 @RestController
 public class BoardController {
 	@Autowired GetService getService;
+	@Autowired PostService postService;
 	
 	@RequestMapping(value = "/board/pagination/{pageNo}", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody Map<?, ?> board(@PathVariable String pageNo, @RequestBody Map<String, String> paramMap) throws Exception {
@@ -50,4 +53,23 @@ public class BoardController {
 		map.put("result", "SUCCESS");
 		return map;
 	}
+	
+	@RequestMapping(value = "/board/write", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody Map<?, ?> write(@RequestBody Map<String, String> paramMap) throws Exception {
+		System.out.println("write Entered");
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", paramMap.get("userId"));
+		map.put("title", paramMap.get("title"));
+		map.put("content", paramMap.get("content"));
+		map.put("regdate", Util.nowDate());
+		if(postService.register(map).equals("1")){
+			map.clear();
+			map.put("success", "success");
+		} else {
+			map.clear();
+		}
+		return map;
+	}
+	
+	
 }

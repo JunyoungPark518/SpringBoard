@@ -18,6 +18,7 @@ function boardView(){
     +'	  <ul id="pagination" class="pagination">'
     +'	  </ul>'
     +'	</nav>'
+    +'  <div style="text-align: right"><a id="write" href="#"><input type="button" value="글쓰기" style="background: white;  margin-bottom: 70px;"/></a></div>'
     +'</div>'
     +'</div>';
 }
@@ -33,15 +34,72 @@ function boardListContent(i){
 }
 function prevBlock(){
     return '<li id="previous">'
-    +'	      <a href="#" aria-label="Previous">'
+    +'	      <a id="prevBlock" href="#" aria-label="Previous">'
     +'	        <span aria-hidden="true">&laquo;</span>'
     +'	      </a>'
     +'	    </li>';
 }
 function nextBlock(){
     return '<li id="next">'
-    +'	      <a href="#" aria-label="Next">'
+    +'	      <a id="nextBlock" href="#" aria-label="Next">'
     +'	        <span aria-hidden="true">&raquo;</span>'
     +'	      </a>'
     +'	    </li>';
+}
+function writeView(){
+    return '<div style="padding: 50px"></div>'
+    +'<div style="width:100%">'
+    +'	<div style="margin: 0 auto; width: 339px">'
+    +'		<ul class="list-group">'
+    +'  			<li class="list-group-item list-group-item-success"><input id="title" type="text" placeholder="제목"/></li>'
+    +'  			<li class="list-group-item list-group-item-success"><textarea name="" id="content" cols="40" rows="10" placeholder="내용"></textarea></li>'
+    +'  			<li class="list-group-item list-group-item-success"><a id="cancel" href="javascript:void(0)"><input type="button" value="취소"/></a><a id="write" href="javascript:void(0)"><input type="button" value="글쓰기"/></a></li>'
+    +'		</ul>'
+    +'	</div>'
+    +'</div>'
+}
+function registerView(){
+    return 	'<div class="container" style="margin-top: 50px;">'
+    +'    <div class="row centered-form">'
+    +'    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">'
+    +'    	<div class="panel panel-default">'
+    +'    		<div class="panel-heading">'
+	+'		    		<h3 class="panel-title">Register Form</h3>'
+	+'		 			</div>'
+	+'		 			<div class="panel-body">'
+	+'		    		<form role="form">'
+	+'		    			<div class="row">'
+	+'		    				<div class="col-xs-6 col-sm-6 col-md-6">'
+	+'		    					<div class="form-group">'
+	+'		                			<input type="text" name="userId" id="userId" class="form-control input-sm" placeholder="ID">'
+	+'		    					</div>'
+	+'		    				</div>'
+	+'		    				<div class="col-xs-6 col-sm-6 col-md-6">'
+	+'		    					<div class="form-group">'
+	+'		    						<input type="text" name="age" id="age" class="form-control input-sm" placeholder="Age">'
+	+'		    					</div>'
+	+'		    				</div>'
+	+'		    			</div>'
+	+'		    			<div class="form-group">'
+	+'		    				<input type="text" name="phone" id="phone" class="form-control input-sm" placeholder="Phone Number">'
+	+'		    			</div>'
+	+'		    			<div class="row">'
+	+'		    				<div class="col-xs-6 col-sm-6 col-md-6">'
+	+'		    					<div class="form-group">'
+	+'		    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">'
+	+'		    					</div>'
+	+'		    				</div>'
+	+'		    				<div class="col-xs-6 col-sm-6 col-md-6">'
+	+'		    					<div class="form-group">'
+	+'		    						<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">'
+	+'		    					</div>'
+	+'		    				</div>'
+	+'		    			</div>'
+	+'		    			<a id="user_register" href="javascript:void(0)"><input type="button" value="Register" class="btn btn-info btn-block"></a>'
+	+'		    		</form>'
+	+'		    	</div>'
+	+'   		</div>'
+    +'		</div>'
+    +'	</div>'
+    +'</div>';
 }

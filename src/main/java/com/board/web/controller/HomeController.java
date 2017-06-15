@@ -28,9 +28,11 @@ public class HomeController {
       model.addAttribute("context", Complex.ContextFactory.create());
       return "index";
    }
-   @RequestMapping("/list")
-   public String board(Model model) {
+   
+   @RequestMapping("/write")
+   public String write(Model model) {
+	   logger.info("HomeController main() {}","ENTER");
 	   model.addAttribute("context", Complex.ContextFactory.create());
-	   return "board/list";
+	   return "board/write";
    }
 }

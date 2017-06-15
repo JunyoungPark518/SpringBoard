@@ -81,6 +81,57 @@ jyp.controller = (function() {
 	$('#board').on('click',function(){
 	    boardMain(1);
 	});
+	$('#login').on('click',function(){
+	    var userId = $('#userId').val();
+	    var pass = $('#pass').val();
+	    $.ajax({
+		      url : $.context() + '/user/login',
+		      method : 'POST',
+		      data : JSON.stringify({
+		          userId : userId, pass : pass
+		      }),
+		      dataType : 'json',
+		      contentType : 'application/json',
+		      success : function(data){
+			  if(data.success==1){
+			      alert('로그인 성공!!');
+			      jyp.cookie.setCookie("login","Y");
+			      jyp.cookie.setCookie("id",data.user.id);
+			      boardMain(1);
+			  }
+		      },
+		      error : function(x,s,m){
+		          alert(m);
+		      }
+		    });
+	});
+	$('#register').on('click',function(){
+	    $('#wrapper').html(registerView());
+	    $('#user_register').on('click',function(){
+		var userId = $('#userId').val();
+		var age = $('#age').val();
+		var phone = $('#phone').val();
+		var pass = $('#password').val();
+		$.ajax({
+		    url : $.context() + '/user/register',
+		    method : 'POST',
+		    data : JSON.stringify({
+			userId : userId, pass : pass, age : age, phone : phone
+		    }),
+		    dataType : 'json',
+		    contentType : 'application/json',
+		    success : function(data){
+			if(data.success==1){
+			    alert('회원가입 성공!!');
+			    index();
+			}
+		    },
+		    error : function(x,s,m){
+			alert(m);
+		    }
+		});
+	    });
+	});
     };
     
     var boardMain = function(pageNo){
@@ -106,16 +157,22 @@ jyp.controller = (function() {
 		        });
 		        if(data.prevBlock>0){
 		            $('#pagination').append(prevBlock());
+		            $('#prevBlock').on('click',function(){
+		        	boardMain(data.prevBlock);
+		            });
 		        }
 		        for(var i=data.startPage; i<=data.endPage; i++){
 		            if(i==data.pageNumber){
-		        		$('#pagination').append('<li><a href="#">'+i+'</a></li>');
+		        		$('#pagination').append('<li><a href="javascript:void(0)">'+i+'</a></li>');
 		            } else {
 		        		$('#pagination').append('<li><a id="page'+i+'" class="goPage" href="javascript:void(0)">'+i+'</a></li>');
 		            }
 		        }
 		        if(data.nextBlock<=data.theNumberOfPages){
 		            $('#pagination').append(nextBlock());
+		            $('#nextBlock').on('click',function(){
+		        	boardMain(data.nextBlock);
+		            });
 		        }
 		        
 		        $('.goPage').on('click',function(){
@@ -125,6 +182,42 @@ jyp.controller = (function() {
 		    error : function(x,s,m){
 		        alert(m);
 		    }
+	    });
+	    $('#write').on('click',function(){
+		if(jyp.cookie.getCookie("login")=='Y'){
+		    write();
+		} else {
+		    alert('로그인 후 이용가능');
+		    index();
+		}
+	    });
+	};
+	
+	var write = function(){
+	    $('#wrapper').html(writeView());
+	    $('#cancel').on('click',function(){
+		boardMain(1);
+	    });
+	    $('#write').on('click',function(){
+		var id = jyp.cookie.getCookie('id');
+		var title = $('#title').val();
+		var content = $('#content').val();
+		$.ajax({
+		      url : $.context() + '/board/write',
+		      method : 'POST',
+		      data : JSON.stringify({
+		          id : id, title : title, content : content
+		      }),
+		      dataType : 'json',
+		      contentType : 'application/json',
+		      success : function(data){
+			  alert('성공!!');
+			  boardMain(1);
+		      },
+		      error : function(x,s,m){
+		          alert(m);
+		      }
+		    });
 	    });
 	};
     
