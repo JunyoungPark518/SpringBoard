@@ -20,17 +20,27 @@ public class HomeController {
    public String home(Model model) {
       logger.info("HomeController home() {}","ENTER");
       model.addAttribute("context", Complex.ContextFactory.create());
-      return "index";
+      return "public:index";
    }
    @RequestMapping("/web")
    public String main(Model model) {
       logger.info("HomeController main() {}","ENTER");
       model.addAttribute("context", Complex.ContextFactory.create());
-      return "index";
+      return "public:index";
    }
-   @RequestMapping("/list")
+   @RequestMapping("/board/list")
    public String board(Model model) {
 	   model.addAttribute("context", Complex.ContextFactory.create());
-	   return "board/list";
+	   return "public:board/list";
+   }
+   @RequestMapping("/board/write")
+   public String write(Model model) {
+	   model.addAttribute("context", Complex.ContextFactory.create());
+	   return "public:board/write";
+   }
+   @RequestMapping("/user/register")
+   public String register(Model model) {
+	   model.addAttribute("context", Complex.ContextFactory.create());
+	   return "public:user/register";
    }
 }

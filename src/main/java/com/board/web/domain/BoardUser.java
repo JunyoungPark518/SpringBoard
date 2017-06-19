@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component;
 import lombok.*;
 
 @Component @Data @Lazy
-public class Article {
-	String seq, id, title, content, regdate, readCount;
+public class BoardUser {
+	String id, pass, phone, gender, age;
 }
