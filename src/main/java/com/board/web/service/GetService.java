@@ -31,4 +31,9 @@ public class GetService {
 		IGetService service = (map) -> mapper.getUser(map);
 		return (List<BoardUser>) service.execute(paramMap);
 	}
+	
+	public int count(Map<?,?> paramMap) throws Exception {
+		IGetService service = (map) -> mapper.count(map);
+		return (int) service.execute(paramMap);
+	}
 }

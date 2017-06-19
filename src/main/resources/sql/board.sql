@@ -51,16 +51,15 @@ INSERT INTO Article(seq, id, title, content, regdate, readCount) VALUES (seq.nex
 INSERT INTO Article(seq, id, title, content, regdate, readCount) VALUES (seq.nextval, 'babungv','Fifth','MY FIFTH ARTICLE',sysdate,'2');
 INSERT INTO Article(seq, id, title, content, regdate, readCount) VALUES (seq.nextval, 'admin','Hi2','Hello my friends2',sysdate,'3');
 
+SELECT * FROM Article;
+
 -- QUERY FOR Pagination
-SELECT *
-	FROM (
-	SELECT @NO := @NO + 1 AS ROWNUM, A.*
-	FROM
-	  (
-	    SELECT *
-	    FROM Article
-	  ) A,
-	  ( SELECT @NO := 0 ) B 
-	  ORDER BY seq DESC
-	) C
-	WHERE C.ROWNUM BETWEEN 1 AND 5;
+SELECT t2.*
+FROM (SELECT ROWNUM art_seq, t.* 
+FROM (SELECT * FROM Article ORDER BY seq DESC) t) t2
+WHERE t2.art_seq BETWEEN 1 AND 5;
+
+-- IN MAPPER
+SELECT t2.* FROM (SELECT ROWNUM art_seq, t.* FROM (SELECT * FROM Article ORDER BY seq DESC) t) t2 WHERE t2.art_seq BETWEEN 1 AND 5
+SELECT t2.* FROM (SELECT ROWNUM art_seq, t.* FROM (SELECT * FROM Article ORDER BY seq DESC) t) t2 WHERE t2.art_seq BETWEEN ${startRow} AND ${endRow}
+

@@ -78,70 +78,75 @@ jyp.controller = (function() {
     };
 
     var index = function(){
-	$('#wrapper').html(indexView());
-	$('#board').on('click',function(){
-	    boardMain(1);
-	});
-	$('#login').on('click',function(){
-	    var userId = $('#userId').val();
-	    var pass = $('#pass').val();
-	    $.ajax({
-		      url : $.context() + '/user/login',
-		      method : 'POST',
-		      data : JSON.stringify({
-		          userId : userId, pass : pass
-		      }),
-		      dataType : 'json',
-		      contentType : 'application/json',
-		      success : function(data){
-			  console.log(data.success);
-			  console.log(data.user);
-			  if(data.success==1){
-			      alert('로그인 성공!!');
-			      /*jyp.cookie.setCookie("login","Y");
-			      jyp.cookie.setCookie("id",data.user.id);
-			      console.log(jyp.cookie.getCookie("login"));
-			      console.log(jyp.cookie.getCookie("id"));*/
-			      boardMain(1);
-			  } else {
-			      alert('로그인 실패');
-			  }
-		      },
-		      error : function(x,s,m){
-		          alert(m);
-		      }
-		    });
-	});
-	$('#register').on('click',function(){
-	    $('#wrapper').html(registerView());
-	    $('#user_register').on('click',function(){
-		var userId = $('#userId').val();
-		var age = $('#age').val();
-		var phone = $('#phone').val();
-		var pass = $('#password').val();
-		$.ajax({
-		    url : $.context() + '/user/register',
-		    method : 'POST',
-		    data : JSON.stringify({
-			userId : userId, pass : pass, age : age, phone : phone
-		    }),
-		    dataType : 'json',
-		    contentType : 'application/json',
-		    success : function(data){
-			console.log(data.success);
-			if(data.success==1){
-			    alert('회원가입 성공!!');
-			    index();
-			} else {
-			    alert('회원가입 실패');
-			}
-		    },
-		    error : function(x,s,m){
-			alert(m);
-		    }
+	if(jyp.cookie.getCookie('login')=='N'){
+	    $('#wrapper').html(indexView());
+		$('#board').on('click',function(){
+		    boardMain(1);
 		});
-	    });
-	});
+		$('#login').on('click',function(){
+		    var userId = $('#userId').val();
+		    var pass = $('#pass').val();
+		    $.ajax({
+			      url : $.context() + '/user/login',
+			      method : 'POST',
+			      data : JSON.stringify({
+			          userId : userId, pass : pass
+			      }),
+			      dataType : 'json',
+			      contentType : 'application/json',
+			      success : function(data){
+				  console.log(data.success);
+				  console.log(data.user);
+				  if(data.success==1){
+				      alert('로그인 성공!!');
+				      jyp.cookie.setCookie("login","Y");
+				      jyp.cookie.setCookie("id",data.user.id);
+				      console.log(jyp.cookie.getCookie("login"));
+				      console.log(jyp.cookie.getCookie("id"));
+				      boardMain(1);
+				  } else {
+				      alert('로그인 실패');
+				  }
+			      },
+			      error : function(x,s,m){
+			          alert(m);
+			      }
+			    });
+		});
+		$('#register').on('click',function(){
+		    $('#wrapper').html(registerView());
+		    $('#user_register').on('click',function(){
+			var userId = $('#userId').val();
+			var age = $('#age').val();
+			var phone = $('#phone').val();
+			var pass = $('#password').val();
+			$.ajax({
+			    url : $.context() + '/user/register',
+			    method : 'POST',
+			    data : JSON.stringify({
+				userId : userId, pass : pass, age : age, phone : phone
+			    }),
+			    dataType : 'json',
+			    contentType : 'application/json',
+			    success : function(data){
+				console.log(data.success);
+				if(data.success==1){
+				    alert('회원가입 성공!!');
+				    index();
+				} else {
+				    alert('회원가입 실패');
+				}
+			    },
+			    error : function(x,s,m){
+				alert(m);
+			    }
+			});
+		    });
+		});
+	} else {
+	    boardMain(1);
+	}
+	
     };
     
     var boardMain = function(pageNo){
@@ -165,6 +170,10 @@ jyp.controller = (function() {
 		            $('#date'+i).text(o.regdate);
 		            $('#count'+i).text(o.readCount);
 		        });
+		        if(jyp.cookie.getCookie('login')=='Y'){
+		            $('#write').after('<a id="logout" href="#"><input type="button" value="로그아웃" style="background: white;  margin-bottom: 70px; margin-left: 20px"/></a>');
+		        }
+		        
 		        if(data.prevBlock>0){
 		            $('#pagination').append(prevBlock());
 		            $('#prevBlock').on('click',function(){
@@ -188,6 +197,11 @@ jyp.controller = (function() {
 		        $('.goPage').on('click',function(){
 		           boardMain($(this).attr('id').split('page')[1]); 
 		        });
+		        $('#logout').on('click',function(){
+		           jyp.cookie.setCookie('login','N'); 
+		           jyp.cookie.setCookie('id',null);
+		           index();
+		        });
 		    },
 		    error : function(x,s,m){
 		        alert(m);
@@ -209,19 +223,19 @@ jyp.controller = (function() {
 		boardMain(1);
 	    });
 	    $('#write').on('click',function(){
-		var id = jyp.cookie.getCookie('id');
+		var userId = jyp.cookie.getCookie('id');
 		var title = $('#title').val();
 		var content = $('#content').val();
 		$.ajax({
 		      url : $.context() + '/board/write',
 		      method : 'POST',
 		      data : JSON.stringify({
-		          id : id, title : title, content : content
+			  userId : userId, title : title, content : content
 		      }),
 		      dataType : 'json',
 		      contentType : 'application/json',
 		      success : function(data){
-			  alert('성공!!');
+			  alert('글쓰기 성공!!');
 			  boardMain(1);
 		      },
 		      error : function(x,s,m){

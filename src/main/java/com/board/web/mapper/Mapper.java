@@ -18,4 +18,5 @@ public interface Mapper {
 	public List<Article> getArticleList(Map<?,?> map) throws Exception;
 	public List<BoardUser> getUser(Map<?,?> map) throws Exception;
 	public List<BoardUser> getAllUser(Map<?,?> map) throws Exception;
+	public int count(Map<?,?> map) throws Exception;
 }

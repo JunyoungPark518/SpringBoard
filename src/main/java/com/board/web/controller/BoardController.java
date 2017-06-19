@@ -25,10 +25,13 @@ public class BoardController {
 	@RequestMapping(value = "/board/pagination/{pageNo}", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody Map<?, ?> board(@PathVariable String pageNo, @RequestBody Map<String, String> paramMap) throws Exception {
 		System.out.println("board Entered");
+		System.out.println("pageNo :   " + pageNo);
 		Map<String, Object> map = new HashMap<>();
 		map.put("group", "Article");
 		int pageNumber = Integer.parseInt(paramMap.get("pageNo"));
-		int theNumberOfRows = getService.getArticleList(map).size();
+		//int theNumberOfRows = getService.getArticleList(map).size();
+		int theNumberOfRows = getService.count(map);
+		System.out.println("theNumberOfRows:    " + theNumberOfRows);
 		int pagesPerOneBlock = 5, rowsPerOnePage = 5, 
 				theNumberOfPages = (theNumberOfRows % rowsPerOnePage == 0) ? theNumberOfRows / rowsPerOnePage
 						: theNumberOfRows / rowsPerOnePage + 1,
@@ -37,6 +40,8 @@ public class BoardController {
 						: theNumberOfPages,
 				startRow = (pageNumber - 1) * rowsPerOnePage + 1, endRow = pageNumber * rowsPerOnePage,
 				prevBlock = startPage - pagesPerOneBlock, nextBlock = startPage + pagesPerOneBlock;
+		System.out.println("startRow:  " + startRow);
+		System.out.println("endRow:   " + endRow);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		List<Article> list = getService.getArticleList(map);
@@ -56,16 +61,19 @@ public class BoardController {
 	public @ResponseBody Map<?, ?> write(@RequestBody Map<String, String> paramMap) throws Exception {
 		System.out.println("write Entered");
 		Map<String, Object> map = new HashMap<>();
+		System.out.println(paramMap.get("userId"));
+		System.out.println(paramMap.get("title"));
+		System.out.println(paramMap.get("content"));
 		map.put("id", paramMap.get("userId"));
 		map.put("title", paramMap.get("title"));
 		map.put("content", paramMap.get("content"));
 		map.put("regdate", Util.nowDate());
-		/*if(postService.register(map).get(0)==1){
+		if(postService.write(map)==1){
 			map.clear();
-			map.put("success", "success");
+			map.put("success", "1");
 		} else {
 			map.clear();
-		}*/
+		}
 		return map;
 	}
 	

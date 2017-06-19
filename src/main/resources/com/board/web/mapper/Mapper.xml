@@ -13,23 +13,7 @@
 
 	<!-- SELECT -->
    <select id="getArticleList" resultType="com.board.web.domain.Article" parameterType="hashMap">
-   SELECT * FROM Article
-   <!-- SELECT *
-	FROM (
-	SELECT @NO := @NO + 1 AS ROWNUM, A.*
-	FROM
-	  (
-	    SELECT *
-	    FROM Article
-	  ) A,
-	  ( SELECT @NO := 0 ) B 
-	  ORDER BY seq DESC
-	) C
-	WHERE C.ROWNUM BETWEEN 1 AND 5; -->
-   <!-- SELECT t2.* 
-			from (select @ROWNUM := @ROWNUM + 1 AS rownum, t.title, t.content, t.regdate, t.seq, t.readCount, t.id
-				  from Article t, (SELECT @ROWNUM := 0) R ORDER BY t.regdate DESC) t2 
-			where t2.rownum between #{startRow} and #{endRow} order by t2.rownum asc; -->
+   SELECT t2.* FROM (SELECT ROWNUM art_seq, t.* FROM (SELECT * FROM Article ORDER BY seq DESC) t) t2 WHERE t2.art_seq BETWEEN #{startRow} AND #{endRow}
    </select>
    
    <select id="getUser" resultType="com.board.web.domain.BoardUser" parameterType="hashMap">
@@ -43,4 +27,8 @@
    
    <!-- DELETE -->
    
+   <!-- COUNT -->
+   <select id="count" resultType="int" parameterType="hashMap">
+   SELECT COUNT(*) FROM ${group}
+   </select>
 </mapper>
