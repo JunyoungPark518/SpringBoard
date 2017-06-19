@@ -35,7 +35,7 @@
 		  </ul>
 		</nav>
 		<div style="text-align: right">
-			<a id="write" href="${context}/board/write"><input type="button" value="글쓰기" style="background: white;  margin-bottom: 70px;"/></a>
+			<a id="write" href="${context}/write"><input type="button" value="글쓰기" style="background: white;  margin-bottom: 70px;"/></a>
 			<a id="logout" href="#"><input type="button" value="로그아웃" style="background: white;  margin-bottom: 70px; margin-left: 20px"/></a>
 		</div>
 	</div>

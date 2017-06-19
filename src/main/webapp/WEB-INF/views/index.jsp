@@ -13,13 +13,13 @@
                           <input type="checkbox" value="remember-me"> Remember me
                       </label>
                   </div>
-                  <a href="${context}/user/login"><button id="login" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button></a>
-                  <a href="${context}/user/register"><input id="register" class="btn btn-lg btn-primary btn-block btn-signin" type="button" value="Register"/></a>
+                  <a href="${context}/login"><button id="login" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button></a>
+                  <a href="${context}/register"><input id="register" class="btn btn-lg btn-primary btn-block btn-signin" type="button" value="Register"/></a>
               </form>
               <a href="#" class="forgot-password">
                   Forgot the password?
               </a>
-              <a id="board" href="${context}/board/list"><button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" style="margin-top: 30px;">Go Board</button></a>
+              <a id="board" href="${context}/list"><button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" style="margin-top: 30px;">Go Board</button></a>
           </div>
       </div>
 </div>
