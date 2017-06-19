@@ -19,7 +19,19 @@
               <a href="#" class="forgot-password">
                   Forgot the password?
               </a>
-              <a id="board" href="${context}/list"><button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" style="margin-top: 30px;">Go Board</button></a>
+              <form action="${context}/list/1" id="board">
+				<input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Go Board" style="margin-top: 30px;"/>
+				<input type="hidden" name="pageNo" value="1" />              
+              </form>
           </div>
       </div>
 </div>
+<script>
+$(function(){
+    var board = $('#board');
+	$('#board input[type=submit]').click(function() {
+		board.attr('method','post');
+		board.submit();
+	});
+});
+</script>
