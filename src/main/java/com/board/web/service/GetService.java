@@ -36,4 +36,9 @@ public class GetService {
 		IGetService service = (map) -> mapper.count(map);
 		return (int) service.execute(paramMap);
 	}
+	
+	public int exist(Map<?,?> paramMap) throws Exception {
+		IGetService service = (map) -> mapper.exist(map);
+		return (int) service.execute(paramMap);
+	}
 }

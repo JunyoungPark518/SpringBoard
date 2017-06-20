@@ -57,8 +57,10 @@
 		
 		</form>
 		<div style="text-align: right">
-			<a id="write" href="${context}/write"><input type="button" value="글쓰기" style="background: white;  margin-bottom: 70px;"/></a>
-			<a id="logout" href="#"><input type="button" value="로그아웃" style="background: white;  margin-bottom: 70px; margin-left: 20px"/></a>
+				<a id="write" href="${context}/write"><input type="button" value="글쓰기" style="background: white;  margin-bottom: 70px;"/></a>
+			<c:if test="${sessionScope.user ne null}">
+				<a id="logout" href="${context}/logout"><input type="button" value="로그아웃" style="background: white;  margin-bottom: 70px; margin-left: 20px"/></a>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -67,12 +69,11 @@
 $(function(){
      $('.goPage').on('click',function(){
 		 var goPage = $(this);
-		 alert('click');
 		 var index = $(this).attr('href').split('/')[3];
 		 alert(index);
-		goPage.attr('method','post');
-		goPage.attr('action','${context}/list/'+index);
-		goPage.submit();
+		 goPage.attr('method','post');
+		 goPage.attr('action','${context}/list/'+index);
+		 goPage.submit();
     });
 });
 </script>

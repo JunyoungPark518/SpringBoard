@@ -8,7 +8,7 @@
 			    		<h3 class="panel-title">Register Form</h3>
 			 			</div>
 			 			<div class="panel-body">
-			    		<form role="form">
+			    		<form id="registerForm" role="form">
 			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
@@ -29,7 +29,7 @@
 			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
-			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+			    						<input type="password" name="pass" id="pass" class="form-control input-sm" placeholder="Password">
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
@@ -38,9 +38,7 @@
 			    					</div>
 			    				</div>
 			    			</div>
-			    			
-			    			<a id="register" href="javascript:void(0)"><input type="button" value="Register" class="btn btn-info btn-block"></a>
-			    		
+			    			<input type="submit" value="Register" class="btn btn-info btn-block">
 			    		</form>
 			    	</div>
 	    		</div>
@@ -48,3 +46,21 @@
     	</div>
     </div>
 </div>
+<script>
+$(function(){
+	var form = $('#registerForm');
+	$('form input[type=submit]').click(function() {
+		var userId = $('input[name=userId]').val();
+		var age = $('input[name=age]').val();
+		var phone = $('input[name=phone]').val();
+		var pass = $('input[name=pass]').val();
+		if(userId=='' || pass=='' || age=='' || phone=='') {
+			alert('필수 항목이 빠져 있습니다.');
+		} else {
+			form.attr('method','post');
+			form.attr('action','register/finished');
+			form.submit();
+		}
+	});
+});
+</script>

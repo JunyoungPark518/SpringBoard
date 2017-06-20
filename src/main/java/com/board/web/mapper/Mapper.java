@@ -19,4 +19,5 @@ public interface Mapper {
 	public List<BoardUser> getUser(Map<?,?> map) throws Exception;
 	public List<BoardUser> getAllUser(Map<?,?> map) throws Exception;
 	public int count(Map<?,?> map) throws Exception;
+	public int exist(Map<?,?> map) throws Exception;
 }

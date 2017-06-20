@@ -31,4 +31,9 @@
    <select id="count" resultType="int" parameterType="hashMap">
    SELECT COUNT(*) FROM ${group}
    </select>
+   
+   <!-- EXIST -->
+   <select id="exist" resultType="int" parameterType="hashMap">
+   SELECT COUNT(*) FROM ${group} WHERE id = #{id}
+   </select>
 </mapper>
