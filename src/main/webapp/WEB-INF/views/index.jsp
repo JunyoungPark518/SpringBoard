@@ -37,7 +37,7 @@ $(function(){
 	var loginForm = $('#loginForm');
 	$('#loginForm input[type=submit]').click(function() {
 		loginForm.attr('method','post');
-		loginForm.attr('action','login/1');
+		loginForm.attr('action','login');
 		var userId = $('input[name=userId]').val();
 		var pass = $('input[name=pass]').val();
 		if(userId=='' || pass=='') {

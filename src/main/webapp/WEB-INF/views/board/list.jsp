@@ -57,9 +57,12 @@
 		
 		</form>
 		<div style="text-align: right">
-				<a id="write" href="${context}/write"><input type="button" value="글쓰기" style="background: white;  margin-bottom: 70px;"/></a>
-			<c:if test="${sessionScope.user ne null}">
+			<a id="write" href="${context}/write"><input type="button" value="글쓰기" style="background: white;  margin-bottom: 70px;"/></a>
+			<c:if test="${sessionScope.permission ne null}">
 				<a id="logout" href="${context}/logout"><input type="button" value="로그아웃" style="background: white;  margin-bottom: 70px; margin-left: 20px"/></a>
+			</c:if>
+			<c:if test="${sessionScope.permission eq null}">
+				<a id="home" href="${context}"><input type="button" value="홈으로" style="background: white;  margin-bottom: 70px; margin-left: 20px"/></a>
 			</c:if>
 		</div>
 	</div>

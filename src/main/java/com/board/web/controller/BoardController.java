@@ -36,10 +36,10 @@ public class BoardController {
 	Article article;
 	@Autowired BoardUser user;
 
-	@RequestMapping(value = "/list/{pageNo}", method = RequestMethod.POST)
+	@RequestMapping("/list/{pageNo}")
 	public String board(
 			@PathVariable String pageNo, 
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
 		logger.info("BoardController - board() {}", "POST");
 		Map<String, Object> map = new HashMap<>();
 		map.put("group", "Article");
@@ -67,6 +67,7 @@ public class BoardController {
 		model.addAttribute("pageNumber", pageNumber);
 		model.addAttribute("theNumberOfPages", theNumberOfPages);
 		model.addAttribute("result", "SUCCESS");
+		model.addAttribute("null", null);
 		return "board:list";
 	}
 	

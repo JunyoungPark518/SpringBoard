@@ -35,65 +35,12 @@ public class PermissionController {
 	Article article;
 	@Autowired BoardUser user;
 
-	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(
 			@RequestParam("userId") String userId, @RequestParam("pass") String pass,
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
 		logger.info("PermissionController - login() {}", "POST");
 		Map<String, Object> map = new HashMap<>();
-		map.put("id", userId);
-		map.put("group", "BoardUser");
-		int exist = getService.exist(map);
-		String movePosition = "public:index";
-		if(exist==0){
-			System.out.println("아이디가 존재하지 않습니다.");
-		} else {
-			user = getService.getUser(map).get(0);
-			if(pass.equals(user.getPass())){
-				System.out.println("비밀번호가 일치");
-				model.addAttribute("user", user);
-				model.addAttribute("result", "SUCCESS");
-				movePosition = "board:list";
-			} else {
-				System.out.println("비밀번호가 일치하지 않음");
-			}
-		}
-		return movePosition;
-	}*/
-	
-	@RequestMapping(value = "/login/{pageNo}", method = RequestMethod.POST)
-	public String loginBoard(
-			@PathVariable String pageNo, 
-			@RequestParam("userId") String userId, @RequestParam("pass") String pass,
-			Model model, HttpSession session) throws Exception {
-		logger.info("BoardController - board() {}", "POST");
-		Map<String, Object> map = new HashMap<>();
-		map.put("group", "Article");
-		int pageNumber = Integer.parseInt(pageNo);
-		int theNumberOfRows = getService.count(map);
-		System.out.println("theNumberOfRows:    " + theNumberOfRows);
-		int pagesPerOneBlock = 5, rowsPerOnePage = 5,
-				theNumberOfPages = (theNumberOfRows % rowsPerOnePage == 0) ? theNumberOfRows / rowsPerOnePage
-						: theNumberOfRows / rowsPerOnePage + 1,
-						startPage = pageNumber - ((pageNumber - 1) % pagesPerOneBlock),
-						endPage = ((startPage + rowsPerOnePage - 1) < theNumberOfPages) ? startPage + pagesPerOneBlock - 1
-								: theNumberOfPages,
-								startRow = (pageNumber - 1) * rowsPerOnePage + 1, endRow = pageNumber * rowsPerOnePage,
-								prevBlock = startPage - pagesPerOneBlock, nextBlock = startPage + pagesPerOneBlock;
-		List<Article> list = new ArrayList<>();
-		map.put("startRow", startRow);
-		map.put("endRow", endRow);
-		list = getService.getArticleList(map);
-		model.addAttribute("list", list);
-		model.addAttribute("theNumberOfRows", theNumberOfRows);
-		model.addAttribute("nextBlock", nextBlock);
-		model.addAttribute("prevBlock", prevBlock);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
-		model.addAttribute("pageNumber", pageNumber);
-		model.addAttribute("theNumberOfPages", theNumberOfPages);
-		model.addAttribute("result", "SUCCESS");
-		map.clear();
 		map.put("id", userId);
 		map.put("group", "BoardUser");
 		int exist = getService.exist(map);
@@ -105,7 +52,8 @@ public class PermissionController {
 			if(pass.equals(user.getPass())){
 				session.setAttribute("permission", user);
 				model.addAttribute("result", "SUCCESS");
-				movePosition = "board:list";
+				model.addAttribute("userId", user.getId());
+				movePosition = "user:main";
 			} else {
 				model.addAttribute("result", "Password is not matched");
 			}
@@ -135,6 +83,7 @@ public class PermissionController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
+		System.out.println("로그아웃 성공");
 		session.invalidate();
 		return "redirect:/";
 	}
